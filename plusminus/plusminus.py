@@ -7,6 +7,8 @@ import numpy as np
 import pyqtgraph as pg
 from PyQt4 import QtCore, QtGui, uic
 
+import colormaps
+
 currdir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(currdir)
 Ui_mainwindow, base = uic.loadUiType(currdir + '/ui/mainwindow.ui', from_imports=False)
@@ -14,10 +16,11 @@ Ui_mainwindow, base = uic.loadUiType(currdir + '/ui/mainwindow.ui', from_imports
 class PlusMinusGui(QtGui.QMainWindow, Ui_mainwindow):
     """TODO: needs a docstring"""
 
-    def __init__(self, plusminus, theme):
+    def __init__(self, plusminus, theme, cmap):
         QtGui.QMainWindow.__init__(self)
         self.setupUi(self)
         self._pm = plusminus
+        self._cmap = getattr(colormaps, cmap)()
         self._init_style(theme)
         self._init_icons()
         self._init_toolbar()
@@ -76,7 +79,7 @@ class PlusMinusGui(QtGui.QMainWindow, Ui_mainwindow):
         self.canvas.ci.layout.setSpacing(0)
         self.canvas.ci.border = (0,0,0)
         self.view = self.canvas.addViewBox(row=0, col=0, lockAspect=True, enableMouse=False, invertY=False)
-        self.imageitem = pg.ImageItem(self._pm.image, autoDownsample=True)
+        self.imageitem = pg.ImageItem(self._pm.image, autoDownsample=True, lut=self._cmap)
         self.view.addItem(self.imageitem)
         self.view.autoRange(padding=0.02)
         self.view.enableAutoRange(self.view.XYAxes)
@@ -169,11 +172,11 @@ class PlusMinus(QtCore.QObject):
         print "Thumbs down (minus)"
         self.status = False
 
-def opengui(plusminus=None, theme='default'):
+def opengui(plusminus=None, theme='default', cmap='cubehelix'):
     if plusminus is None:
         plusminus = PlusMinus()
     app = QtGui.QApplication([])
-    frame = PlusMinusGui(plusminus, theme)
+    frame = PlusMinusGui(plusminus, theme, cmap)
     frame.show()
     app.exec_()
 
