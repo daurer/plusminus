@@ -75,7 +75,7 @@ class PlusMinusGui(QtGui.QMainWindow, Ui_mainwindow):
         self.canvas.ci.layout.setContentsMargins(0, 0, 0, 0)
         self.canvas.ci.layout.setSpacing(0)
         self.canvas.ci.border = (0,0,0)
-        self.view = self.canvas.addViewBox(row=0, col=0, lockAspect=True, enableMouse=False, invertY=True)
+        self.view = self.canvas.addViewBox(row=0, col=0, lockAspect=True, enableMouse=False, invertY=False)
         self.imageitem = pg.ImageItem(self._pm.image, autoDownsample=True)
         self.view.addItem(self.imageitem)
         self.view.autoRange(padding=0.02)
