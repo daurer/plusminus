@@ -1,3 +1,7 @@
+# ----------------------------------
+# Copyright 2016, Benedikt J. Daurer
+# plusminus is distributed under the terms of the MIT license
+# -----------------------------------------------------------
 import os, sys
 import numpy as np
 import pyqtgraph as pg
