@@ -9,6 +9,9 @@ class Basic(plusminus.PlusMinus):
         self.height = 1200 # window height in px
         self.image  = np.random.random((200,100)) # initial image
         self.status = None # initial status
+
+    def first(self):
+        self.update.emit() # update canvas and other GUI elements        
             
     def next(self):
         self.image = np.random.random((200,100)) # next image

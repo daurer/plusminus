@@ -24,6 +24,7 @@ class PlusMinusGui(QtGui.QMainWindow, Ui_mainwindow):
         self._init_connections()
         self._init_shortcuts()
         self._init_canvas()
+        self._pm.first()
         
     def _init_style(self, theme):
         """Define the style."""
@@ -59,6 +60,8 @@ class PlusMinusGui(QtGui.QMainWindow, Ui_mainwindow):
         self.up.toggled.connect(self._on_trigger_up)
         self.down.toggled.connect(self._on_trigger_down)
         self._pm.update.connect(self._on_update)
+        self._pm.leftmsg.connect(self._on_left_message)
+        self._pm.rightmsg.connect(self._on_right_message)
 
     def _init_shortcuts(self):
         """Initialize shortcuts."""
@@ -122,17 +125,30 @@ class PlusMinusGui(QtGui.QMainWindow, Ui_mainwindow):
         else:
             self.up.setChecked(self._pm.status)
             self.down.setChecked(not self._pm.status)
-        
+
+    @QtCore.pyqtSlot(str)
+    def _on_left_message(self, msg):
+        self.leftlabel.setText(msg)
+
+    @QtCore.pyqtSlot(str)
+    def _on_right_message(self, msg):
+        self.rightlabel.setText(msg)
+
         
 class PlusMinus(QtCore.QObject):
-    update = QtCore.pyqtSignal()
+    update   = QtCore.pyqtSignal()
+    leftmsg  = QtCore.pyqtSignal(str)
+    rightmsg = QtCore.pyqtSignal(str)
     
     def __init__(self):
         QtCore.QObject.__init__(self)
         self.height = 1000
         self.image  = np.random.random((100,100))
         self.status = None 
-            
+        
+    def first(self):
+        self.update.emit()        
+        
     def next(self):
         print "Clicked on next, now update"
         self.image = np.random.random((100,100))
