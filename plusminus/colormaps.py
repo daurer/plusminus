@@ -36,6 +36,3 @@ def jet():
 def bone(): 
     array = cm.bone(np.arange(256))
     return array[:,:3] * 255
-
-def get_cmap(name):
-    return getattr(name)
