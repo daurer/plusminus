@@ -83,8 +83,8 @@ class PlusMinusGui(QtGui.QMainWindow, Ui_mainwindow):
         self.view.addItem(self.imageitem)
         self.view.autoRange(padding=0.02)
         self.view.enableAutoRange(self.view.XYAxes)
-        aspect = float(self._pm.image.shape[0]/self._pm.image.shape[1])
-        self.resize(0.95*self._pm.height*aspect,self._pm.height)
+        #aspect = float(self._pm.image.shape[0]/self._pm.image.shape[1])
+        #self.resize(0.95*self._pm.height(aspect,self._pm.height)
         
     def resizeEvent(self, event):
         """Overwrites QtGui.QMainWindow.resizeEvent and                                                                                                                           
