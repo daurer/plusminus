@@ -91,6 +91,10 @@ class PlusMinusGui(QtGui.QMainWindow, Ui_mainwindow):
         additionally calls QtGui.QApplication.processEvents()."""
         QtGui.QMainWindow.resizeEvent(self, event)
         QtGui.QApplication.processEvents()    
+
+    def closeEvent(self, event):
+        self._pm.close()
+        QtGui.QMainWindow.closeEvent(self, event)
         
     @QtCore.pyqtSlot()        
     def _on_trigger_left(self):
@@ -171,6 +175,9 @@ class PlusMinus(QtCore.QObject):
     def minus(self):
         print "Thumbs down (minus)"
         self.status = False
+
+    def close(self):
+        print "Closing the application"
 
 def opengui(plusminus=None, theme='default', cmap='cubehelix'):
     if plusminus is None:
