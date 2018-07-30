@@ -5,7 +5,7 @@
 import os, sys
 import numpy as np
 import pyqtgraph as pg
-from PyQt4 import QtCore, QtGui, uic
+from PyQt5 import QtCore, QtGui, uic
 
 import colormaps
 
